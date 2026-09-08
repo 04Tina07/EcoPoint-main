@@ -3,10 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>EcoPoint</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoPoint - Recicla con Propósito</title>
+    
+    <!-- Recarga de Favicon y Estilos -->
     <link rel="icon" type="image/png" href="./assets/img/simbolo-de-reciclaje.png">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- PWA Meta y Manifest -->
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <meta name="description" content="Plataforma interactiva para ubicar puntos de reciclaje y ganar recompensas.">
 </head>
 
 <body>
@@ -22,7 +29,7 @@
             </a>
         </div>
 
-        <nav>
+        <nav aria-label="Navegación principal">
             <a href="#mapa">Mapa</a>
             <a href="#guia">Guía</a>
             <a href="#comunidad">Comunidad</a>
@@ -49,7 +56,7 @@
                 <div class="hero-buttons">
                     <a class="btn btn-primary" href="#mapa">
                         Comenzar Ahora
-                        <svg class="icon" viewBox="0 0 24 24">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M15 5l7 7-7 7M20 12H4" fill="none" stroke="currentColor" stroke-width="2.5" />
                         </svg>
                     </a>
@@ -61,17 +68,19 @@
         <section class="map-section" id="mapa">
             <h2>Encuentra Puntos de Reciclaje Cerca de Ti</h2>
             <div class="map-card">
-                <input type="text" placeholder="Buscar ubicación..." class="search">
-                <div class="filters">
-                    <a href="#" class="filter active">Plástico</a>
-                    <a href="#" class="filter">Papel</a>
-                    <a href="#" class="filter">Vidrio</a>
-                    <a href="#" class="filter">Electrónica</a>
+                <input type="text" placeholder="Buscar ubicación..." class="search" aria-label="Buscar ubicación de reciclaje">
+                <div class="filters" role="group" aria-label="Filtros de material">
+                    <button type="button" class="filter active" data-material="plastico">Plástico</button>
+                    <button type="button" class="filter" data-material="papel">Papel</button>
+                    <button type="button" class="filter" data-material="vidrio">Vidrio</button>
+                    <button type="button" class="filter" data-material="electronica">Electrónica</button>
                 </div>
                 <div class="map-container">
                     <iframe
+                        id="map-iframe"
                         class="map-iframe"
                         loading="lazy"
+                        title="Mapa interactivo de puntos de reciclaje"
                         referrerpolicy="no-referrer-when-downgrade"
                         src="https://www.google.com/maps?q=Bogot%C3%A1%20Colombia&output=embed">
                     </iframe>
@@ -93,6 +102,7 @@
                     class="card guide-card"
                     tabindex="0"
                     role="button"
+                    aria-haspopup="dialog"
                     data-guide-title="¿Qué reciclar?"
                     data-guide-text="Puedes reciclar materiales como papel limpio, cartón seco, botellas plásticas, envases de vidrio y latas de aluminio. Antes de depositarlos, asegúrate de enjuagarlos y separar tapas, etiquetas o restos de comida."
                 >
@@ -109,6 +119,7 @@
                     class="card guide-card"
                     tabindex="0"
                     role="button"
+                    aria-haspopup="dialog"
                     data-guide-title="¿Cómo clasificar?"
                     data-guide-text="Separa tus residuos en bolsas o recipientes distintos: reciclables aprovechables, residuos orgánicos y residuos no reciclables. Mantener esta clasificación desde casa facilita el trabajo de recicladores y centros de acopio."
                 >
@@ -125,6 +136,7 @@
                     class="card guide-card"
                     tabindex="0"
                     role="button"
+                    aria-haspopup="dialog"
                     data-guide-title="Impacto ambiental"
                     data-guide-text="Reciclar reduce la cantidad de residuos que llegan a rellenos sanitarios, disminuye la extracción de materias primas y ahorra energía. Cada acción ayuda a reducir la contaminación y promueve una economía más circular."
                 >
@@ -142,6 +154,7 @@
                     class="card guide-card"
                     tabindex="0"
                     role="button"
+                    aria-haspopup="dialog"
                     data-guide-title="Tips verdes"
                     data-guide-text="Prefiere productos reutilizables, evita plásticos de un solo uso, compra solo lo necesario y reutiliza envases cuando sea posible. Pequeños hábitos diarios generan un impacto positivo acumulado en el tiempo."
                 >
@@ -156,9 +169,10 @@
             </div>
         </section>
 
-        <div class="guide-modal" id="guide-modal" aria-hidden="true">
+        <!-- Ventana Modal para Guías -->
+        <div class="guide-modal" id="guide-modal" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title" style="display: none;">
             <div class="guide-modal-backdrop" data-close-modal></div>
-            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title">
+            <div class="guide-modal-dialog">
                 <button class="guide-modal-close" type="button" aria-label="Cerrar ventana" data-close-modal>&times;</button>
                 <h3 id="guide-modal-title">Guía de Reciclaje</h3>
                 <p id="guide-modal-text"></p>
@@ -172,14 +186,14 @@
             <div class="gamification-grid" id="gamification-grid">
                 <article class="reward-card points-card" id="user-points-card" hidden>
                     <div class="card-title">
-                        <span class="title-icon">☆</span>
+                        <span class="title-icon" aria-hidden="true">☆</span>
                         <h3>Tus Puntos</h3>
                     </div>
 
                     <div class="points-total" id="user-points-total">—</div>
                     <p class="points-label">Puntos totales</p>
 
-                    <div class="progress-bar">
+                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="user-points-bar">
                         <span class="progress-fill" id="user-points-progress"></span>
                     </div>
 
@@ -188,7 +202,7 @@
 
                 <article class="reward-card medals-card">
                     <div class="card-title">
-                        <span class="title-icon">🏅</span>
+                        <span class="title-icon" aria-hidden="true">🏅</span>
                         <h3>Medallas</h3>
                     </div>
 
@@ -199,7 +213,7 @@
 
                 <article class="reward-card ranking-card">
                     <div class="card-title">
-                        <span class="title-icon">🏆</span>
+                        <span class="title-icon" aria-hidden="true">🏆</span>
                         <h3>Top Recicladores</h3>
                     </div>
 
@@ -209,25 +223,21 @@
                             <span class="ranking-name">María García</span>
                             <span class="ranking-score">2850</span>
                         </div>
-
                         <div class="ranking-item">
                             <span class="ranking-position silver">2</span>
                             <span class="ranking-name">Juan Pérez</span>
                             <span class="ranking-score">2640</span>
                         </div>
-
                         <div class="ranking-item">
                             <span class="ranking-position bronze">3</span>
                             <span class="ranking-name">Ana Martínez</span>
                             <span class="ranking-score">2380</span>
                         </div>
-
                         <div class="ranking-item">
                             <span class="ranking-position neutral">4</span>
                             <span class="ranking-name">Carlos López</span>
                             <span class="ranking-score">2150</span>
                         </div>
-
                         <div class="ranking-item">
                             <span class="ranking-position neutral">5</span>
                             <span class="ranking-name">Laura Sánchez</span>
@@ -238,6 +248,7 @@
             </div>
         </section>
 
+        <!-- ====== IMPACTO ====== -->
         <section class="impact-section" id="impacto">
             <div class="impact-heading">
                 <span class="impact-tag">ODS 12 + ODS 11</span>
@@ -263,6 +274,7 @@
             </div>
         </section>
 
+        <!-- ====== REGISTRO / AUTENTICACIÓN ====== -->
         <section class="form-section" id="registro">
             <div class="form-wrapper">
                 <div class="form-copy">
@@ -277,19 +289,19 @@
                 </div>
 
                 <div id="auth-panel" class="auth-panel">
-                    <div class="auth-tabs">
-                        <button type="button" class="auth-tab active" data-auth-tab="login">Iniciar sesión</button>
-                        <button type="button" class="auth-tab" data-auth-tab="register">Registrarse</button>
+                    <div class="auth-tabs" role="tablist">
+                        <button type="button" class="auth-tab active" role="tab" aria-selected="true" data-auth-tab="login">Iniciar sesión</button>
+                        <button type="button" class="auth-tab" role="tab" aria-selected="false" data-auth-tab="register">Registrarse</button>
                     </div>
 
                     <form class="eco-form" id="login-form" novalidate>
                         <div class="form-group">
                             <label for="login-email">Correo electrónico</label>
-                            <input type="email" id="login-email" name="email" placeholder="ejemplo@correo.com" required>
+                            <input type="email" id="login-email" name="email" placeholder="ejemplo@correo.com" required autocomplete="email">
                         </div>
                         <div class="form-group">
                             <label for="login-password">Contraseña</label>
-                            <input type="password" id="login-password" name="password" placeholder="Mínimo 6 caracteres" required minlength="6">
+                            <input type="password" id="login-password" name="password" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="current-password">
                         </div>
                         <button type="submit" class="btn btn-submit">Iniciar sesión</button>
                         <p class="form-status" id="login-status" aria-live="polite"></p>
@@ -298,11 +310,11 @@
                     <form class="eco-form" id="register-form" hidden novalidate>
                         <div class="form-group">
                             <label for="register-name">Nombre completo</label>
-                            <input type="text" id="register-name" name="name" placeholder="Ej. Laura Martinez" required minlength="3">
+                            <input type="text" id="register-name" name="name" placeholder="Ej. Laura Martinez" required minlength="3" autocomplete="name">
                         </div>
                         <div class="form-group">
                             <label for="register-email">Correo electrónico</label>
-                            <input type="email" id="register-email" name="email" placeholder="ejemplo@correo.com" required>
+                            <input type="email" id="register-email" name="email" placeholder="ejemplo@correo.com" required autocomplete="email">
                         </div>
                         <div class="form-group">
                             <label for="register-password">Contraseña</label>
@@ -329,141 +341,136 @@
 
     <!-- ====== FOOTER ====== -->
     <footer id="contacto">
-            <div class="footer-container">
-                <div class="footer-section">
-                    <h3>EcoPoint ♻</h3>
-                    <p>Promoviendo el ODS 12: Producción y consumo responsables para un futuro sostenible.</p>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Navegación</h4>
-                    <ul>
-                        <li><a href="#inicio">Sobre nosotros</a></li>
-                        <li><a href="#mapa">Mapa de Puntos</a></li>
-                        <li><a href="#impacto">ODS e impacto</a></li>
-                        <li><a href="#registro">Registro</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Mini mapa del sitio</h4>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#guia">Guía de reciclaje</a></li>
-                        <li><a href="#comunidad">Sistema de recompensas</a></li>
-                        <li><a href="#contacto">Footer y contacto</a></li>
-                    </ul>
-                </div>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>EcoPoint ♻</h3>
+                <p>Promoviendo el ODS 12: Producción y consumo responsables para un futuro sostenible.</p>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2026 EcoPoint - Hecho con 🌱 para el planeta</p>
+            <div class="footer-section">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="#inicio">Sobre nosotros</a></li>
+                    <li><a href="#mapa">Mapa de Puntos</a></li>
+                    <li><a href="#impacto">ODS e impacto</a></li>
+                    <li><a href="#registro">Registro</a></li>
+                </ul>
             </div>
-        </footer>
 
+            <div class="footer-section">
+                <h4>Mini mapa del sitio</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#guia">Guía de reciclaje</a></li>
+                    <li><a href="#comunidad">Sistema de recompensas</a></li>
+                    <li><a href="#contacto">Footer y contacto</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 EcoPoint - Hecho con 🌱 para el planeta</p>
+        </div>
+    </footer>
+
+    <!-- Lógica de control optimizada -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const guideModal = document.getElementById('guide-modal');
+            const guideModalTitle = document.getElementById('guide-modal-title');
+            const guideModalText = document.getElementById('guide-modal-text');
+            const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+
+            const breadcrumbMap = {
+                '#inicio': 'EcoPoint',
+                '#mapa': 'Mapa',
+                '#guia': 'Guía de Reciclaje',
+                '#comunidad': 'Comunidad',
+                '#impacto': 'ODS',
+                '#registro': 'Registro',
+                '#contacto': 'Contacto'
+            };
+
+            const updateBreadcrumb = (hash) => {
+                breadcrumbCurrent.textContent = breadcrumbMap[hash] || 'EcoPoint';
+            };
+
+            // Manejo de Filtros
+            const filterContainer = document.querySelector('.filters');
+            if (filterContainer) {
+                filterContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('filter')) {
+                        filterContainer.querySelectorAll('.filter').forEach(f => f.classList.remove('active'));
+                        e.target.classList.add('active');
+                    }
+                });
+            }
+
+            // Gestión del Modal
+            const openGuideModal = (card) => {
+                guideModalTitle.textContent = card.dataset.guideTitle;
+                guideModalText.textContent = card.dataset.guideText;
+                guideModal.style.display = 'flex';
+                guideModal.classList.add('is-open');
+                document.body.classList.add('modal-open');
+            };
+
+            const closeGuideModal = () => {
+                guideModal.classList.remove('is-open');
+                guideModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            };
+
+            document.querySelectorAll('.guide-card').forEach(card => {
+                card.addEventListener('click', () => openGuideModal(card));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openGuideModal(card);
+                    }
+                });
+            });
+
+            guideModal.addEventListener('click', (e) => {
+                if (e.target.hasAttribute('data-close-modal')) {
+                    closeGuideModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && guideModal.classList.contains('is-open')) {
+                    closeGuideModal();
+                }
+            });
+
+            window.addEventListener('hashchange', () => updateBreadcrumb(window.location.hash));
+            updateBreadcrumb(window.location.hash || '#inicio');
+        });
+    </script>
+
+    <!-- Scripts de la aplicación -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/points.js"></script>
+    <script src="js/rewards.js"></script>
+    <script src="js/movil.js"></script>
+
+    <!-- Inicialización de PWA -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initAuth === 'function') initAuth();
+            if (typeof initPoints === 'function') initPoints();
+            if (typeof initRewards === 'function') initRewards();
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado:', reg.scope))
+                    .catch(err => console.error('Error SW:', err));
+            });
+        }
+    </script>
 </body>
-<script>
-  const filterLinks = document.querySelectorAll('.filters .filter');
-  const guideCards = document.querySelectorAll('.guide-card');
-  const guideModal = document.getElementById('guide-modal');
-  const guideModalTitle = document.getElementById('guide-modal-title');
-  const guideModalText = document.getElementById('guide-modal-text');
-  const guideModalClosers = document.querySelectorAll('[data-close-modal]');
-  const breadcrumbCurrent = document.getElementById('breadcrumb-current');
-  const breadcrumbMap = {
-    '#inicio': 'EcoPoint',
-    '#mapa': 'Mapa',
-    '#guia': 'Guía de Reciclaje',
-    '#comunidad': 'Comunidad',
-    '#impacto': 'ODS',
-    '#registro': 'Registro',
-    '#contacto': 'Contacto'
-  };
-
-  const updateBreadcrumb = (hash) => {
-    breadcrumbCurrent.textContent = breadcrumbMap[hash] || 'EcoPoint';
-  };
-
-  filterLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      filterLinks.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-    });
-  });
-
-  document.querySelectorAll('header nav a, .logo-link, #auth-btn, footer a, .hero-buttons a').forEach(link => {
-    link.addEventListener('click', () => {
-      updateBreadcrumb(link.getAttribute('href'));
-    });
-  });
-
-  const openGuideModal = (card) => {
-    guideModalTitle.textContent = card.dataset.guideTitle;
-    guideModalText.textContent = card.dataset.guideText;
-    guideModal.classList.add('is-open');
-    guideModal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
-  };
-
-  const closeGuideModal = () => {
-    guideModal.classList.remove('is-open');
-    guideModal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
-  };
-
-  guideCards.forEach(card => {
-    card.addEventListener('click', () => openGuideModal(card));
-    card.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openGuideModal(card);
-      }
-    });
-  });
-
-  guideModalClosers.forEach(element => {
-    element.addEventListener('click', closeGuideModal);
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && guideModal.classList.contains('is-open')) {
-      closeGuideModal();
-    }
-  });
-
-  window.addEventListener('hashchange', () => {
-    updateBreadcrumb(window.location.hash);
-  });
-
-  updateBreadcrumb(window.location.hash || '#inicio');
-</script>
-<script src="js/config.js"></script>
-<script src="js/api.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/points.js"></script>
-<script src="js/rewards.js"></script>
-<scr>
-  document.addEventListener('DOMContentLoaded', () => {
-    initAuth();
-    initPoints();
-    initRewards();
-  });
-
-  <!-- Enlace al Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2e7d32">
-
-<!-- Registro del Service Worker -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then((reg) => console.log('Service Worker registrado con éxito:', reg.scope))
-        .catch((err) => console.error('Error al registrar Service Worker:', err));
-    });
-  }
-
-</script>
 </html>

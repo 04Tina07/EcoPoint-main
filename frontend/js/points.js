@@ -3,7 +3,7 @@ async function loadRecyclingPoints() {
     const status = document.getElementById('points-status');
     if (!list) return;
 
-    list.innerHTML = '';
+    list.textContent = '';
     if (status) {
         status.textContent = 'Cargando puntos de reciclaje...';
         status.className = 'points-status';
@@ -14,22 +14,38 @@ async function loadRecyclingPoints() {
 
         if (status) status.textContent = '';
 
-        if (!points.length) {
+        if (!Array.isArray(points) || !points.length) {
             list.innerHTML = '<p class="points-empty">No hay puntos de reciclaje registrados aún.</p>';
             return;
         }
 
+        const fragment = document.createDocumentFragment();
+
         points.forEach((point) => {
             const card = document.createElement('article');
             card.className = 'point-card';
-            card.innerHTML = `
-                <h3>${point.name}</h3>
-                <p class="point-address">${point.address || 'Sin dirección'}</p>
-                <p class="point-coords">Lat: ${point.latitude} · Lng: ${point.longitude}</p>
-                <p class="point-material">Material ID: ${point.materialId ?? 'N/A'}</p>
-            `;
-            list.appendChild(card);
+
+            const title = document.createElement('h3');
+            title.textContent = point.name || 'Punto sin nombre';
+
+            const address = document.createElement('p');
+            address.className = 'point-address';
+            address.textContent = point.address || 'Sin dirección';
+
+            const coords = document.createElement('p');
+            coords.className = 'point-coords';
+            coords.textContent = `Lat: ${point.latitude ?? 'N/A'} · Lng: ${point.longitude ?? 'N/A'}`;
+
+            const material = document.createElement('p');
+            material.className = 'point-material';
+            material.textContent = `Material ID: ${point.materialId ?? 'N/A'}`;
+
+            card.append(title, address, coords, material);
+            fragment.appendChild(card);
         });
+
+        list.appendChild(fragment);
+
     } catch (error) {
         if (status) {
             status.textContent = `No se pudieron cargar los puntos: ${error.message}`;
@@ -41,3 +57,5 @@ async function loadRecyclingPoints() {
 function initPoints() {
     loadRecyclingPoints();
 }
+
+document.addEventListener('DOMContentLoaded', initPoints);

@@ -1,41 +1,22 @@
-function getToken() {
-    return localStorage.getItem(AUTH_TOKEN_KEY);
-}
-
-function setToken(token) {
-    localStorage.setItem(AUTH_TOKEN_KEY, token);
-}
-
-function clearToken() {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-}
-
-function isLoggedIn() {
-    return Boolean(getToken());
-}
-
-async function apiRequest(path, options = {}) {
+const API = {
+  async request(endpoint, options = {}) {
+    const token = localStorage.getItem(window.AUTH_TOKEN_KEY);
+    
     const headers = {
-        'Content-Type': 'application/json',
-        ...(options.headers || {}),
+      'Content-Type': 'application/json',
+      ...(token && { 'Authorization': `Bearer ${token}` }),
+      ...options.headers
     };
 
-    const token = getToken();
-    if (token) {
-        headers.Authorization = `Bearer ${token}`;
-    }
-
-    const response = await fetch(`${API_BASE}${path}`, {
+    try {
+      const response = await fetch(`${window.API_BASE}${endpoint}`, {
         ...options,
-        headers,
-    });
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-        const message = data.error || data.message || 'Error en la solicitud';
-        throw new Error(message);
+        headers
+      });
+      return await response.json();
+    } catch (error) {
+      console.warn('Backend inaccesible o sin conexión. Operando en modo local/PWA.');
+      return { success: false, message: 'Modo sin conexión' };
     }
-
-    return data;
-}
+  }
+};

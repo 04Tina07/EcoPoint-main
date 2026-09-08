@@ -1,111 +1,77 @@
-const MEDAL_ICONS = ['☆', '🎖', '🏆', '↗', '⭐', '🏅'];
+/**
+ * Módulo de Gestión de Recompensas y Logros para EcoPoint
+ */
 
-function formatPoints(value) {
-    return Number(value).toLocaleString('es-CO');
+function checkUserAuthentication() {
+  const tokenKey = window.AUTH_TOKEN_KEY || 'ecopoint_token';
+  return Boolean(localStorage.getItem(tokenKey));
 }
 
-function renderMedalsCatalog(medals) {
-    const grid = document.getElementById('medals-grid');
-    if (!grid) return;
+function loadRewards() {
+  // Comprobamos la autenticación leyendo el token guardado
+  const tokenKey = window.AUTH_TOKEN_KEY || 'ecopoint_token';
+  const isAuthenticated = Boolean(localStorage.getItem(tokenKey));
 
-    const sorted = [...medals].sort((a, b) => a.pointsRequired - b.pointsRequired);
-
-    if (!sorted.length) {
-        grid.innerHTML = '<p class="medals-empty">No hay medallas en el catálogo.</p>';
-        return;
-    }
-
-    grid.innerHTML = sorted
-        .map((medal, index) => {
-            const icon = MEDAL_ICONS[index % MEDAL_ICONS.length];
-            return `
-                <div class="medal-item unlocked">
-                    <span class="medal-icon">${icon}</span>
-                    <p>${medal.name}</p>
-                    <span class="medal-points">${formatPoints(medal.pointsRequired)} pts</span>
-                </div>
-            `;
-        })
-        .join('');
-}
-
-function renderUserPoints(total, medals) {
-    if (!isLoggedIn()) return;
-
-    const totalEl = document.getElementById('user-points-total');
-    const progressEl = document.getElementById('user-points-progress');
-    const progressTextEl = document.getElementById('user-points-progress-text');
-
-    if (!totalEl) return;
-
-    totalEl.textContent = formatPoints(total);
-
-    const sorted = [...medals].sort((a, b) => a.pointsRequired - b.pointsRequired);
-    const nextMedal = sorted.find((medal) => total < medal.pointsRequired);
-
-    if (!progressEl || !progressTextEl) return;
-
-    if (!nextMedal) {
-        progressEl.style.width = '100%';
-        progressTextEl.textContent = '¡Has alcanzado todas las medallas del catálogo!';
-        return;
-    }
-
-    const previousThreshold = sorted
-        .filter((medal) => medal.pointsRequired <= total)
-        .pop()?.pointsRequired ?? 0;
-
-    const range = nextMedal.pointsRequired - previousThreshold;
-    const progress = range > 0
-        ? Math.min(100, Math.round(((total - previousThreshold) / range) * 100))
-        : 0;
-
-    progressEl.style.width = `${progress}%`;
-    progressTextEl.textContent = `${formatPoints(nextMedal.pointsRequired - total)} puntos hasta la próxima medalla`;
-}
-
-async function loadRewards() {
-    const grid = document.getElementById('medals-grid');
-    const totalEl = document.getElementById('user-points-total');
-    const progressTextEl = document.getElementById('user-points-progress-text');
-
-    if (grid) {
-        grid.innerHTML = '<p class="medals-status">Cargando medallas...</p>';
-    }
-
-    if (isLoggedIn() && totalEl) {
-        totalEl.textContent = '…';
-        if (progressTextEl) progressTextEl.textContent = 'Cargando puntos...';
-    }
-
-    try {
-        const medals = await apiRequest('/medals');
-        renderMedalsCatalog(medals);
-
-        if (!isLoggedIn()) return;
-
-        const user = await apiRequest('/auth/me');
-        const records = await apiRequest(`/recycling-records/user/${user.id}`);
-        const total = records.reduce((sum, record) => sum + record.pointsEarned, 0);
-        renderUserPoints(total, medals);
-    } catch (error) {
-        if (grid) {
-            grid.innerHTML = `<p class="medals-status is-error">No se pudo cargar el catálogo: ${error.message}</p>`;
-        }
-
-        if (isLoggedIn() && totalEl) {
-            totalEl.textContent = '—';
-            if (progressTextEl) {
-                progressTextEl.textContent = `No se pudieron cargar tus puntos: ${error.message}`;
-            }
-        }
-    } finally {
-        if (typeof syncRewardsAuthUI === 'function') {
-            syncRewardsAuthUI();
-        }
-    }
+  if (isAuthenticated) {
+    initRewards();
+  } else {
+    console.log('Usuario invitado: mostrando recompensas generales');
+    renderGuestRewards();
+  }
 }
 
 function initRewards() {
-    loadRewards();
+  const userStr = localStorage.getItem('ecopoint_user');
+  const user = userStr ? JSON.parse(userStr) : null;
+
+  const pointsCard = document.getElementById('user-points-card');
+  const pointsTotal = document.getElementById('user-points-total');
+  const progressBar = document.getElementById('user-points-progress');
+  const progressText = document.getElementById('user-points-progress-text');
+
+  if (pointsCard) pointsCard.hidden = false;
+
+  const currentPoints = user ? (user.points || 350) : 350;
+  if (pointsTotal) pointsTotal.textContent = currentPoints;
+
+  if (progressBar) {
+    const percentage = Math.min((currentPoints / 1000) * 100, 100);
+    progressBar.style.width = `${percentage}%`;
+  }
+
+  if (progressText) {
+    progressText.textContent = `${currentPoints} / 1000 Puntos para la siguiente medalla`;
+  }
+
+  renderMedalsGrid();
 }
+
+function renderGuestRewards() {
+  const pointsCard = document.getElementById('user-points-card');
+  if (pointsCard) pointsCard.hidden = true;
+  renderMedalsGrid();
+}
+
+function renderMedalsGrid() {
+  const medalsGrid = document.getElementById('medals-grid');
+  if (!medalsGrid) return;
+
+  medalsGrid.innerHTML = `
+    <div style="display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap;">
+      <div title="Reciclador Novato" style="text-align: center;">
+        <span style="font-size: 2rem;">🌱</span>
+        <p style="margin: 5px 0 0; font-size: 0.8rem;">Novato</p>
+      </div>
+      <div title="Guardián Verde" style="text-align: center;">
+        <span style="font-size: 2rem;">♻️</span>
+        <p style="margin: 5px 0 0; font-size: 0.8rem;">Guardián</p>
+      </div>
+      <div title="Héroe Ecológico" style="text-align: center; opacity: 0.4;">
+        <span style="font-size: 2rem;">🏆</span>
+        <p style="margin: 5px 0 0; font-size: 0.8rem;">Bloqueado</p>
+      </div>
+    </div>
+  `;
+}
+
+document.addEventListener('DOMContentLoaded', loadRewards);
