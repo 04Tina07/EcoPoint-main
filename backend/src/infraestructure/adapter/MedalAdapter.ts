@@ -1,8 +1,8 @@
 import { Repository } from "typeorm";
-import { Medal as MedalDomain } from "../../domain/Medal";
-import { Medal as MedalEntity } from "../entities/Medal";
-import { MedalPort } from "../../domain/port/MedalPort";
-import { AppDataSource } from "../config/data-base";
+import { Medal as MedalDomain } from "../../domain/Medal.js";
+import { MedalPort } from "../../domain/port/MedalPort.js";
+import { AppDataSource } from "../config/data-base.js";
+import { Medal as MedalEntity } from "../entities/Medal.js";
 
 export class MedalAdapter implements MedalPort {
     private medalRepository: Repository<MedalEntity>;

@@ -1,12 +1,12 @@
 import { Repository } from "typeorm";
-import { RecyclingRecord as RecyclingRecordDomain } from "../../domain/RecyclingRecord";
-import { RecyclingRecord as RecyclingRecordEntity } from "../entities/RecyclingRecord";
-import { User } from "../entities/User";
-import { RecyclingPoint } from "../entities/RecyclingPoint";
-import { Medal } from "../entities/Medal";
-import { UserMedal } from "../entities/UserMedal";
-import { CreateRecordResult, RecyclingRecordPort } from "../../domain/port/RecyclingRecordPort";
-import { AppDataSource } from "../config/data-base";
+import { CreateRecordResult, RecyclingRecordPort } from "../../domain/port/RecyclingRecordPort.js";
+import { RecyclingRecord as RecyclingRecordDomain } from "../../domain/RecyclingRecord.js";
+import { AppDataSource } from "../config/data-base.js";
+import { Medal } from "../entities/Medal.js";
+import { RecyclingPoint } from "../entities/RecyclingPoint.js";
+import { RecyclingRecord as RecyclingRecordEntity } from "../entities/RecyclingRecord.js";
+import { User } from "../entities/User.js";
+import { UserMedal } from "../entities/UserMedal.js";
 
 export class RecyclingRecordAdapter implements RecyclingRecordPort {
     private recordRepository: Repository<RecyclingRecordEntity>;

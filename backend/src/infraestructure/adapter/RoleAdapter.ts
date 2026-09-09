@@ -1,8 +1,8 @@
 import { Repository } from "typeorm";
-import { Role as RoleDomain } from "../../domain/Role";
-import { Role as RoleEntity } from "../entities/Role";
-import { RolePort } from "../../domain/port/RolePort";
-import { AppDataSource } from "../config/data-base";
+import { RolePort } from "../../domain/port/RolePort.js";
+import { Role as RoleDomain } from "../../domain/Role.js";
+import { AppDataSource } from "../config/data-base.js";
+import { Role as RoleEntity } from "../entities/Role.js";
 
 export class RoleAdapter implements RolePort {
     private roleRepository: Repository<RoleEntity>;

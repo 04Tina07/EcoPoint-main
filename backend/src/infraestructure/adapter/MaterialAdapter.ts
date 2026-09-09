@@ -1,8 +1,8 @@
 import { Repository } from "typeorm";
-import { Material as MaterialDomain } from "../../domain/Material";
-import { Material as MaterialEntity } from "../entities/Material";
-import { MaterialPort } from "../../domain/port/MaterialPort";
-import { AppDataSource } from "../config/data-base";
+import { Material as MaterialDomain } from "../../domain/Material.js";
+import { MaterialPort } from "../../domain/port/MaterialPort.js";
+import { AppDataSource } from "../config/data-base.js";
+import { Material as MaterialEntity } from "../entities/Material.js";
 
 export class MaterialAdapter implements MaterialPort {
     private materialRepository: Repository<MaterialEntity>;

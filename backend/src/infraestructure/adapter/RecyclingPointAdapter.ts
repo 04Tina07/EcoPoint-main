@@ -1,9 +1,9 @@
 import { Repository } from "typeorm";
-import { RecyclingPoint as RecyclingPointDomain } from "../../domain/RecyclingPoint";
-import { RecyclingPoint as RecyclingPointEntity } from "../entities/RecyclingPoint";
-import { Material } from "../entities/Material";
-import { RecyclingPointPort } from "../../domain/port/RecyclingPointPort";
-import { AppDataSource } from "../config/data-base";
+import { RecyclingPointPort } from "../../domain/port/RecyclingPointPort.js";
+import { RecyclingPoint as RecyclingPointDomain } from "../../domain/RecyclingPoint.js";
+import { AppDataSource } from "../config/data-base.js";
+import { Material } from "../entities/Material.js";
+import { RecyclingPoint as RecyclingPointEntity } from "../entities/RecyclingPoint.js";
 
 export class RecyclingPointAdapter implements RecyclingPointPort {
     private pointRepository: Repository<RecyclingPointEntity>;
