@@ -1,12 +1,12 @@
-import express from 'express';
 import cors from 'cors';
-import userRoutes from '../routes/UserRoutes';
-import authRoutes from '../routes/AuthRoutes';
-import recyclingPointRoutes from '../routes/RecyclingPointRoutes';
-import materialRoutes from '../routes/MaterialRoutes';
-import medalRoutes from '../routes/MedalRoutes';
-import recyclingRecordRoutes from '../routes/RecyclingRecordRoutes';
-import roleRoutes from '../routes/RoleRoutes';
+import express from 'express';
+import authRoutes from '../routes/AuthRoutes.js';
+import materialRoutes from '../routes/MaterialRoutes.js';
+import medalRoutes from '../routes/MedalRoutes.js';
+import recyclingPointRoutes from '../routes/RecyclingPointRoutes.js';
+import recyclingRecordRoutes from '../routes/RecyclingRecordRoutes.js';
+import roleRoutes from '../routes/RoleRoutes.js';
+import userRoutes from '../routes/UserRoutes.js';
 
 class App{
     private app: express.Application;
