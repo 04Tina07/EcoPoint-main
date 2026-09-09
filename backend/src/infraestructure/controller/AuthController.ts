@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { UserApplication } from '../../application/UserApplication';
-import { loadLoginData } from '../util/auth-validation';
-import envs from '../config/environment-vars';
-import { AuthRequest } from '../middleware/auth.middleware';
+import { UserApplication } from '../../application/UserApplication.js';
+import envs from '../config/environment-vars.js';
+import { AuthRequest } from '../middleware/auth.middleware.js';
+import { loadLoginData } from '../util/auth-validation.js';
 
 export class AuthController {
     constructor(private app: UserApplication) {}
