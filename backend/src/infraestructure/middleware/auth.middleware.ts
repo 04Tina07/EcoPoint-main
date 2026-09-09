@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import envs from '../config/environment-vars';
+import envs from '../config/environment-vars.js';
 
 export type AuthRequest = Request & {
     user?: { userId: number; email: string; roleId?: number };
