@@ -1,5 +1,5 @@
-import { Medal } from "../domain/Medal";
-import { MedalPort } from "../domain/port/MedalPort";
+import { Medal } from "../domain/Medal.js";
+import { MedalPort } from "../domain/port/MedalPort.js";
 
 export class MedalApplication {
     private port: MedalPort;

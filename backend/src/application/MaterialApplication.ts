@@ -1,5 +1,5 @@
-import { Material } from "../domain/Material";
-import { MaterialPort } from "../domain/port/MaterialPort";
+import { Material } from "../domain/Material.js";
+import { MaterialPort } from "../domain/port/MaterialPort.js";
 
 export class MaterialApplication {
     private port: MaterialPort;

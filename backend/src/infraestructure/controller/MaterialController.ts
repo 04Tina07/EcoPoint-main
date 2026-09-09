@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { MaterialApplication } from "../../application/MaterialApplication";
-import { Material } from "../../domain/Material";
-import { loadMaterialData } from "../util/material-validation";
-import { loadUpdateMaterialData } from "../util/material-update-validation";
+import { MaterialApplication } from "../../application/MaterialApplication.js";
+import { Material } from "../../domain/Material.js";
+import { loadUpdateMaterialData } from "../util/material-update-validation.js";
+import { loadMaterialData } from "../util/material-validation.js";
 
 export class MaterialController {
     constructor(private app: MaterialApplication) {}

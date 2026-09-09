@@ -1,5 +1,5 @@
-import { RecyclingPoint } from "../domain/RecyclingPoint";
-import { RecyclingPointPort } from "../domain/port/RecyclingPointPort";
+import { RecyclingPoint } from "../domain/RecyclingPoint.js";
+import { RecyclingPointPort } from "../domain/port/RecyclingPointPort.js";
 
 export class RecyclingPointApplication {
     private port: RecyclingPointPort;
