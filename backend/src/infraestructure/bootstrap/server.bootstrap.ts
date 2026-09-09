@@ -1,6 +1,6 @@
 import express from 'express';
 import http from 'http';
-import envs from '../config/environment-vars';
+import envs from '../config/environment-vars.js';
 
 export class ServerBootstrap {
     private app: express.Application;
