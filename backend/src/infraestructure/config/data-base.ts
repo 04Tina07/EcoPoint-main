@@ -1,14 +1,14 @@
 import dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
-import { AuthSession } from '../entities/AuthSession';
-import { Material } from '../entities/Material';
-import { Medal } from '../entities/Medal';
-import { RecyclingPoint } from '../entities/RecyclingPoint';
-import { RecyclingRecord } from '../entities/RecyclingRecord';
-import { Role } from '../entities/Role';
+import { AuthSession } from '../entities/AuthSession.js';
+import { Material } from '../entities/Material.js';
+import { Medal } from '../entities/Medal.js';
+import { RecyclingPoint } from '../entities/RecyclingPoint.js';
+import { RecyclingRecord } from '../entities/RecyclingRecord.js';
+import { Role } from '../entities/Role.js';
 import { User } from '../entities/User.js';
-import { UserMedal } from '../entities/UserMedal';
-import envs from './environment-vars';
+import { UserMedal } from '../entities/UserMedal.js';
+import envs from './environment-vars.js';
 
 dotenv.config();
 
