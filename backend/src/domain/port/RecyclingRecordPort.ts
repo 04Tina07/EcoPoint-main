@@ -1,4 +1,4 @@
-import { RecyclingRecord } from "../RecyclingRecord";
+import { RecyclingRecord } from "../RecyclingRecord.js";
 
 export type CreateRecordResult = {
     recordId: number;

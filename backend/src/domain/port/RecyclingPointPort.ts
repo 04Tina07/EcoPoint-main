@@ -1,4 +1,4 @@
-import { RecyclingPoint } from "../RecyclingPoint";
+import { RecyclingPoint } from "../RecyclingPoint.js";
 
 export interface RecyclingPointPort {
     createPoint(point: Omit<RecyclingPoint, "id">): Promise<number>;

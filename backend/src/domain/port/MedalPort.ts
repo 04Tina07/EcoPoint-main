@@ -1,4 +1,4 @@
-import { Medal } from "../Medal";
+import { Medal } from "../Medal.js";
 
 export interface MedalPort {
     createMedal(medal: Omit<Medal, "id">): Promise<number>;

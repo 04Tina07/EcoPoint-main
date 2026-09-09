@@ -1,4 +1,4 @@
-import { Role } from "../Role";
+import { Role } from "../Role.js";
 
 export interface RolePort {
     createRole(role: Omit<Role, "id">): Promise<number>;

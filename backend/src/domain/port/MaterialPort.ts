@@ -1,4 +1,4 @@
-import { Material } from "../Material";
+import { Material } from "../Material.js";
 
 export interface MaterialPort {
     createMaterial(material: Omit<Material, "id">): Promise<number>;
