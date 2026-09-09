@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { UserAdapter } from '../adapter/UserAdapter';
-import { UserApplication } from '../../application/UserApplication';
-import { AuthController } from '../controller/AuthController';
-import { authMiddleware } from '../middleware/auth.middleware';
+import { UserApplication } from '../../application/UserApplication.js';
+import { UserAdapter } from '../adapter/UserAdapter.js';
+import { AuthController } from '../controller/AuthController.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 
 const router = Router();
 const userAdapter = new UserAdapter();

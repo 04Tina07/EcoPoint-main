@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { MedalApplication } from "../../application/MedalApplication";
-import { MedalAdapter } from "../adapter/MedalAdapter";
-import { MedalController } from "../controller/MedalController";
+import { MedalApplication } from "../../application/MedalApplication.js";
+import { MedalAdapter } from "../adapter/MedalAdapter.js";
+import { MedalController } from "../controller/MedalController.js";
 
 const router = Router();
 const adapter = new MedalAdapter();

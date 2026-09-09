@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { MaterialApplication } from "../../application/MaterialApplication";
-import { MaterialAdapter } from "../adapter/MaterialAdapter";
-import { MaterialController } from "../controller/MaterialController";
+import { MaterialApplication } from "../../application/MaterialApplication.js";
+import { MaterialAdapter } from "../adapter/MaterialAdapter.js";
+import { MaterialController } from "../controller/MaterialController.js";
 
 const router = Router();
 const adapter = new MaterialAdapter();

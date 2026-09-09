@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { RecyclingPointApplication } from "../../application/RecyclingPointApplication";
-import { RecyclingPointAdapter } from "../adapter/RecyclingPointAdapter";
-import { RecyclingPointController } from "../controller/RecyclingPointController";
+import { RecyclingPointApplication } from "../../application/RecyclingPointApplication.js";
+import { RecyclingPointAdapter } from "../adapter/RecyclingPointAdapter.js";
+import { RecyclingPointController } from "../controller/RecyclingPointController.js";
 
 const router = Router();
 

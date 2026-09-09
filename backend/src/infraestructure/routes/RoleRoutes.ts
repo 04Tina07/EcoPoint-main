@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { RoleApplication } from "../../application/RoleApplication";
-import { RoleAdapter } from "../adapter/RoleAdapter";
-import { RoleController } from "../controller/RoleController";
+import { RoleApplication } from "../../application/RoleApplication.js";
+import { RoleAdapter } from "../adapter/RoleAdapter.js";
+import { RoleController } from "../controller/RoleController.js";
 
 const router = Router();
 const adapter = new RoleAdapter();
