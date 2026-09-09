@@ -1,5 +1,5 @@
-import { RecyclingRecord } from "../domain/RecyclingRecord";
-import { CreateRecordResult, RecyclingRecordPort } from "../domain/port/RecyclingRecordPort";
+import { RecyclingRecord } from "../domain/RecyclingRecord.js";
+import { CreateRecordResult, RecyclingRecordPort } from "../domain/port/RecyclingRecordPort.js";
 
 export class RecyclingRecordApplication {
     private port: RecyclingRecordPort;

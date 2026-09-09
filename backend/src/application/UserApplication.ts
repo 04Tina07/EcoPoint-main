@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
-import { User } from "../domain/User";
-import { UserPort } from "../domain/port/UserPort";
+import { User } from "../domain/User.js";
+import { UserPort } from "../domain/port/UserPort.js";
 
 export type PublicUser = Omit<User, 'password'>;
 

@@ -1,5 +1,5 @@
-import { Role } from "../domain/Role";
-import { RolePort } from "../domain/port/RolePort";
+import { Role } from "../domain/Role.js";
+import { RolePort } from "../domain/port/RolePort.js";
 
 export class RoleApplication {
     private port: RolePort;
