@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { RecyclingPointApplication } from "../../application/RecyclingPointApplication";
-import { RecyclingPoint } from "../../domain/RecyclingPoint";
-import { loadRecyclingPointData } from "../util/recycling-point-validation";
-import { loadUpdateRecyclingPointData } from "../util/recycling-point-update-validation";
+import { RecyclingPointApplication } from "../../application/RecyclingPointApplication.js";
+import { RecyclingPoint } from "../../domain/RecyclingPoint.js";
+import { loadUpdateRecyclingPointData } from "../util/recycling-point-update-validation.js";
+import { loadRecyclingPointData } from "../util/recycling-point-validation.js";
 
 export class RecyclingPointController {
     private app: RecyclingPointApplication;

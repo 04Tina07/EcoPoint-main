@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { RecyclingRecordApplication } from "../../application/RecyclingRecordApplication";
-import { RecyclingRecord } from "../../domain/RecyclingRecord";
-import { loadRecyclingRecordData } from "../util/recycling-record-validation";
-import { loadUpdateRecyclingRecordData } from "../util/recycling-record-update-validation";
+import { RecyclingRecordApplication } from "../../application/RecyclingRecordApplication.js";
+import { RecyclingRecord } from "../../domain/RecyclingRecord.js";
+import { loadUpdateRecyclingRecordData } from "../util/recycling-record-update-validation.js";
+import { loadRecyclingRecordData } from "../util/recycling-record-validation.js";
 
 export class RecyclingRecordController {
     constructor(private app: RecyclingRecordApplication) {}

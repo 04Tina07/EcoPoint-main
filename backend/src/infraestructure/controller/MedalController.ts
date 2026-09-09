@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { MedalApplication } from "../../application/MedalApplication";
-import { Medal } from "../../domain/Medal";
-import { loadMedalData } from "../util/medal-validation";
-import { loadUpdateMedalData } from "../util/medal-update-validation";
+import { MedalApplication } from "../../application/MedalApplication.js";
+import { Medal } from "../../domain/Medal.js";
+import { loadUpdateMedalData } from "../util/medal-update-validation.js";
+import { loadMedalData } from "../util/medal-validation.js";
 
 export class MedalController {
     constructor(private app: MedalApplication) {}

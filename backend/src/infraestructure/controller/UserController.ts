@@ -1,9 +1,9 @@
-import { UserApplication } from "../../application/UserApplication";
 import { Request, Response } from "express";
-import { loadUserData } from "../util/user-validation";
-import { User } from "../../domain/User";
-import { loadUpdateUserData } from "../util/user-update-validation";
-import { loadEmail } from "../util/email-validation";
+import { UserApplication } from "../../application/UserApplication.js";
+import { User } from "../../domain/User.js";
+import { loadEmail } from "../util/email-validation.js";
+import { loadUpdateUserData } from "../util/user-update-validation.js";
+import { loadUserData } from "../util/user-validation.js";
 
 export class UserController {
     private app: UserApplication;

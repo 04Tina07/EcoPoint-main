@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { RoleApplication } from "../../application/RoleApplication";
-import { Role } from "../../domain/Role";
-import { loadRoleData } from "../util/role-validation";
-import { loadUpdateRoleData } from "../util/role-update-validation";
+import { RoleApplication } from "../../application/RoleApplication.js";
+import { Role } from "../../domain/Role.js";
+import { loadUpdateRoleData } from "../util/role-update-validation.js";
+import { loadRoleData } from "../util/role-validation.js";
 
 export class RoleController {
     constructor(private app: RoleApplication) {}
